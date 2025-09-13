@@ -55,6 +55,8 @@ class _LoginPageState extends State<LoginPage> {
     scheme: 'mailto',
     path: 'badchoicestudio@gmail.com',
   );
+  static final String _whatsAppDigits =
+      '919567955255'; // E.164 without '+' for wa.me
 
   @override
   void initState() {
@@ -186,10 +188,60 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> _launch(Uri uri) async {
     final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
     if (!ok && mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Could not open link')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Could not open link')));
     }
+  }
+
+  Future<void> _launchWhatsApp() async {
+    final appUri = Uri.parse(
+      'whatsapp://send?phone=+$_whatsAppDigits&text=Hello',
+    );
+    final webUri = Uri.parse('https://wa.me/$_whatsAppDigits?text=Hello');
+    var ok = await launchUrl(appUri, mode: LaunchMode.externalApplication);
+    if (!ok) {
+      ok = await launchUrl(webUri, mode: LaunchMode.externalApplication);
+    }
+    if (!ok && mounted) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Could not open WhatsApp')));
+    }
+  }
+
+  Future<void> _showContactOptions() async {
+    if (!mounted) return;
+    final theme = Theme.of(context);
+    await showModalBottomSheet(
+      context: context,
+      backgroundColor: theme.colorScheme.surface,
+      builder: (ctx) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: Icon(Icons.call, color: theme.colorScheme.primary),
+                title: const Text('Call +91 9567955255'),
+                onTap: () {
+                  Navigator.of(ctx).pop();
+                  _launch(_footerPhoneUri);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.chat, color: theme.colorScheme.primary),
+                title: const Text('WhatsApp +91 9567955255'),
+                onTap: () {
+                  Navigator.of(ctx).pop();
+                  _launchWhatsApp();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -317,12 +369,12 @@ class _LoginPageState extends State<LoginPage> {
                 runSpacing: 4,
                 children: [
                   TextButton(
-                    onPressed: () => _launch(_footerPhoneUri),
+                    onPressed: _showContactOptions,
                     style: TextButton.styleFrom(
                       foregroundColor: Theme.of(context).colorScheme.primary,
                       padding: EdgeInsets.zero,
                     ),
-                    child: const Text('Call: +91 9567955255'),
+                    child: const Text('Call / WhatsApp: +91 9567955255'),
                   ),
                   TextButton(
                     onPressed: () => _launch(_footerEmailUri),
