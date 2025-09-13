@@ -15,8 +15,23 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Bad Choice Studio',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        colorScheme:
+            ColorScheme.fromSeed(
+              seedColor: Colors.red,
+              brightness: Brightness.dark,
+            ).copyWith(
+              primary: Colors.red,
+              surface: Colors.black,
+              onPrimary: Colors.white,
+              onSurface: Colors.white,
+            ),
+        scaffoldBackgroundColor: Colors.black,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.black,
+          foregroundColor: Colors.white,
+          elevation: 0,
+        ),
       ),
       home: const LoginPage(),
     );
@@ -187,7 +202,11 @@ class _LoginPageState extends State<LoginPage> {
                         color: Colors.black12,
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: const Icon(Icons.image, size: 48, color: Colors.black38),
+                      child: const Icon(
+                        Icons.image,
+                        size: 48,
+                        color: Colors.black38,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     Text(
@@ -201,7 +220,7 @@ class _LoginPageState extends State<LoginPage> {
                     Text(
                       "Manage your marketing in one place",
                       style: theme.textTheme.bodyLarge?.copyWith(
-                        color: Colors.black54,
+                        color: Colors.white70,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -241,12 +260,12 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(height: 12),
                     Row(
                       children: [
-                        Expanded(child: Divider(color: Colors.black12)),
+                        Expanded(child: Divider(color: Colors.white12)),
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text('or'),
                         ),
-                        Expanded(child: Divider(color: Colors.black12)),
+                        Expanded(child: Divider(color: Colors.white12)),
                       ],
                     ),
                     const SizedBox(height: 12),
@@ -275,13 +294,13 @@ class _LoginPageState extends State<LoginPage> {
               Text(
                 'Need help?\nCall: +91 9567955255\nEmail: badchoicestudio@gmail.com',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.black54),
+                style: TextStyle(color: Colors.white70),
               ),
               SizedBox(height: 8),
               Text(
                 'App Version 1.0.0 | © Bad Choice Studio',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.black45, fontSize: 12),
+                style: TextStyle(color: Colors.white54, fontSize: 12),
               ),
               SizedBox(height: 4),
             ],
@@ -344,7 +363,7 @@ class HomePage extends StatelessWidget {
             const Spacer(),
             const Text(
               'Bad Choice Studio',
-              style: TextStyle(fontSize: 16, color: Colors.black54),
+              style: TextStyle(fontSize: 16, color: Colors.white70),
             ),
           ],
         ),
