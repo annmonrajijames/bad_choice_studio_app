@@ -50,6 +50,11 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _dialCodeController = TextEditingController();
   bool _busy = false;
+  static final Uri _footerPhoneUri = Uri(scheme: 'tel', path: '+919567955255');
+  static final Uri _footerEmailUri = Uri(
+    scheme: 'mailto',
+    path: 'badchoicestudio@gmail.com',
+  );
 
   @override
   void initState() {
@@ -178,6 +183,15 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Future<void> _launch(Uri uri) async {
+    final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
+    if (!ok && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Could not open link')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -288,21 +302,45 @@ class _LoginPageState extends State<LoginPage> {
           padding: const EdgeInsets.fromLTRB(24, 8, 24, 16),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: const [
-              Divider(),
-              SizedBox(height: 8),
-              Text(
-                'Need help?\nCall: +91 9567955255\nEmail: badchoicestudio@gmail.com',
+            children: [
+              const Divider(),
+              const SizedBox(height: 8),
+              const Text(
+                'Need help?',
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white70),
               ),
-              SizedBox(height: 8),
-              Text(
+              const SizedBox(height: 6),
+              Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 16,
+                runSpacing: 4,
+                children: [
+                  TextButton(
+                    onPressed: () => _launch(_footerPhoneUri),
+                    style: TextButton.styleFrom(
+                      foregroundColor: Theme.of(context).colorScheme.primary,
+                      padding: EdgeInsets.zero,
+                    ),
+                    child: const Text('Call: +91 9567955255'),
+                  ),
+                  TextButton(
+                    onPressed: () => _launch(_footerEmailUri),
+                    style: TextButton.styleFrom(
+                      foregroundColor: Theme.of(context).colorScheme.primary,
+                      padding: EdgeInsets.zero,
+                    ),
+                    child: const Text('Email: badchoicestudio@gmail.com'),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              const Text(
                 'App Version 1.0.0 | © Bad Choice Studio',
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white54, fontSize: 12),
               ),
-              SizedBox(height: 4),
+              const SizedBox(height: 4),
             ],
           ),
         ),
