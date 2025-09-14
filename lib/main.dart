@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
   static final Uri _footerPhoneUri = Uri(scheme: 'tel', path: '+919567955255');
   static final Uri _footerEmailUri = Uri(
     scheme: 'mailto',
-    path: 'badchoicestudio@gmail.com',
+    path: 'badchoicestudiosolutions@gmail.com',
   );
   static final String _whatsAppDigits =
       '919567955255'; // E.164 without '+' for wa.me
@@ -382,7 +382,9 @@ class _LoginPageState extends State<LoginPage> {
                       foregroundColor: Theme.of(context).colorScheme.primary,
                       padding: EdgeInsets.zero,
                     ),
-                    child: const Text('Email: badchoicestudio@gmail.com'),
+                    child: const Text(
+                      'Email: badchoicestudiosolutions@gmail.com',
+                    ),
                   ),
                 ],
               ),
@@ -407,7 +409,7 @@ class HomePage extends StatelessWidget {
   static final Uri _phoneUri = Uri(scheme: 'tel', path: '+919567955255');
   static final Uri _emailUri = Uri(
     scheme: 'mailto',
-    path: 'badchoicestudio@gmail.com',
+    path: 'badchoicestudiosolutions@gmail.com',
   );
 
   Future<void> _launch(Uri uri, BuildContext context) async {
